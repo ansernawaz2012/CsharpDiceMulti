@@ -12,14 +12,22 @@ namespace Dice
     {
         private bool gameEnded = false;
         private string userInstruction;
-        Player playerOne = new Player();
+
+      static  List<Player> players = new List<Player>();
+
+        static int currentPlayerIndex = 0;
+
+       // Player playerOne = new Player();
        // Score score = new Score();
 
         //Constructor starts game
         public Game()
         {
-            StartGame(playerOne);
+            CreatePlayers();
+
+            StartGame(players[currentPlayerIndex]);
         }
+
 
         /// <summary>
         /// creates new instance of a player and starts loop
@@ -38,7 +46,7 @@ namespace Dice
 
                 int currentRoll = Dice.Roll();
 
-                Console.WriteLine($"You have rolled a {currentRoll}");
+                Console.WriteLine($"{currentPlayer.Name} you have rolled a {currentRoll}");
 
                 currentPlayer = Score.CheckDiceScore(currentPlayer, currentRoll);
 
@@ -90,7 +98,9 @@ namespace Dice
             currentPlayer.GameWon = false;
             currentPlayer.GameLost = false;
             gameEnded = false;
-            StartGame(currentPlayer);
+            int activePlayer = currentPlayerIndex % players.Count;
+
+            StartGame(players[activePlayer]);
         }
 
         /// <summary>
@@ -101,10 +111,16 @@ namespace Dice
             if (currentPlayer.GameWon)
             {
                 Console.WriteLine($"You have won!!!! Your score is {currentPlayer.Score}");
+                currentPlayerIndex += 1;
+
             }
             else
             {
                 Console.WriteLine($"Game Over! Your score is {currentPlayer.Score}");
+
+                currentPlayerIndex += 1;
+               // RestartGame(currentPlayer);
+
             }
             // Set game ended flag to true to exit while loop
             gameEnded = true;
@@ -124,6 +140,33 @@ namespace Dice
 
 
             CheckUserInput(currentPlayer, userInstruction);
+        }
+
+        //function to create player objects and add to list
+        public void CreatePlayers()
+        {
+            Console.Write("Enter the number of players: ");
+
+
+
+            int numberOfPlayers;
+            string input = Console.ReadLine();
+
+            //Loop until valid input entered
+            while (!Int32.TryParse(input, out numberOfPlayers))
+
+            {
+                Console.WriteLine("Invalid input. Please enter a number");
+                input = Console.ReadLine();
+            }
+
+
+
+            for (int i = 0; i < numberOfPlayers; i++)
+            {
+                players.Add(new Player(i+1));
+            }
+
         }
     }
 }

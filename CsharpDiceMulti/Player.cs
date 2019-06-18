@@ -18,13 +18,13 @@ namespace Dice
         public bool GameWon { get; set; } = false;
 
 
-        public Player()
+        public Player(int i)
         {
 
             //loop until name is entered
             while (true)
             {
-                Console.WriteLine("Please enter your name:");
+                Console.WriteLine($"Player {i} please enter your name:");
                 Name = Console.ReadLine();
 
                 if (string.IsNullOrWhiteSpace(Name))
