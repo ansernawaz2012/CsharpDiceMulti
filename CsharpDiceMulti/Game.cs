@@ -14,6 +14,7 @@ namespace Dice
         private string userInstruction;
 
       static  List<Player> players = new List<Player>();
+      static List<Tuple<string, int>> PlayerScoresList = new List<Tuple<string, int>>();
 
         static int currentPlayerIndex = 0;
 
@@ -111,15 +112,18 @@ namespace Dice
             if (currentPlayer.GameWon)
             {
                 Console.WriteLine($"You have won!!!! Your score is {currentPlayer.Score}");
+                StoreResult(currentPlayer);
+                ShowLeaderboard();
                 currentPlayerIndex += 1;
 
             }
             else
             {
                 Console.WriteLine($"Game Over! Your score is {currentPlayer.Score}");
-
+                StoreResult(currentPlayer);
+                ShowLeaderboard();
                 currentPlayerIndex += 1;
-               // RestartGame(currentPlayer);
+               
 
             }
             // Set game ended flag to true to exit while loop
@@ -140,6 +144,29 @@ namespace Dice
 
 
             CheckUserInput(currentPlayer, userInstruction);
+        }
+
+        //Loop through list and show previous scores
+        
+        private void ShowLeaderboard()
+        {
+            PlayerScoresList = PlayerScoresList.OrderByDescending(s => s.Item2).ToList();
+            Console.WriteLine("Leaderboard");
+            Console.WriteLine("-----------");
+            
+            for (var i = 0; i < PlayerScoresList.Count; i++)
+            {
+                Console.WriteLine(PlayerScoresList[i]);
+            }
+
+            //List<Tuple<string, int>> ScoreBoard = PlayerScoresList.Select(s => s);
+
+        }
+
+        //Add result to list
+        private void StoreResult(Player currentPlayer)
+        {
+            PlayerScoresList.Add(new Tuple<string, int>(currentPlayer.Name, currentPlayer.Score));
         }
 
         //function to create player objects and add to list
