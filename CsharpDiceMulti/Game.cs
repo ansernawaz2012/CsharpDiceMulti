@@ -113,7 +113,7 @@ namespace Dice
             {
                 Console.WriteLine($"You have won!!!! Your score is {currentPlayer.Score}");
                 StoreResult(currentPlayer);
-                ShowLeaderboard();
+                Score.ShowLeaderboard(PlayerScoresList);
                 currentPlayerIndex += 1;
 
             }
@@ -121,7 +121,7 @@ namespace Dice
             {
                 Console.WriteLine($"Game Over! Your score is {currentPlayer.Score}");
                 StoreResult(currentPlayer);
-                ShowLeaderboard();
+                Score.ShowLeaderboard(PlayerScoresList);
                 currentPlayerIndex += 1;
                
 
@@ -146,22 +146,7 @@ namespace Dice
             CheckUserInput(currentPlayer, userInstruction);
         }
 
-        //Loop through list and show previous scores
         
-        private void ShowLeaderboard()
-        {
-            PlayerScoresList = PlayerScoresList.OrderByDescending(s => s.Item2).ToList();
-            Console.WriteLine("Leaderboard");
-            Console.WriteLine("-----------");
-            
-            for (var i = 0; i < PlayerScoresList.Count; i++)
-            {
-                Console.WriteLine(PlayerScoresList[i]);
-            }
-
-            //List<Tuple<string, int>> ScoreBoard = PlayerScoresList.Select(s => s);
-
-        }
 
         //Add result to list
         private void StoreResult(Player currentPlayer)

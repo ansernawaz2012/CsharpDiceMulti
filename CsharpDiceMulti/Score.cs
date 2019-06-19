@@ -38,6 +38,24 @@ namespace Dice
 
             return player;
         }
+        /// <summary>
+        /// Takes list of tuples as a parameter and displays in descending order
+        /// </summary>
+        /// <param name="PlayerScoresList"></param>
+        public static void ShowLeaderboard(List<Tuple<string, int>> PlayerScoresList)
+        {
+            PlayerScoresList = PlayerScoresList.OrderByDescending(s => s.Item2).ToList();
+            Console.WriteLine("Leaderboard");
+            Console.WriteLine("-----------");
+
+            for (var i = 0; i < PlayerScoresList.Count; i++)
+            {
+                Console.WriteLine(PlayerScoresList[i]);
+            }
+
+            //List<Tuple<string, int>> ScoreBoard = PlayerScoresList.Select(s => s);
+
+        }
 
 
     }
